@@ -24,8 +24,8 @@ load_dotenv(find_dotenv())
 src_chat = getenv("SOURCES") or None
 dst_chat = getenv("DESTINATIONS") or None
 
-sources = {s:d for s, d in zip(src_chat.split('/'), dst_chat.split('/'))}
-destinations = {d:s for s, d in zip(src_chat.split('/'), dst_chat.split('/'))}
+sources = {s:d for s, d in zip(src_chat.split('/'), dst_chat.split('/')) if src_chat}
+destinations = {d:s for s, d in zip(src_chat.split('/'), dst_chat.split('/')) if dst_chat}
 
 source_dialogs = {}
 destination_dialogs = {}
