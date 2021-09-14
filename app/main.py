@@ -89,19 +89,19 @@ async def handle_message(message, dst_dialog):
 async def new_message_handler(event):
     try:
         message = event.message
-        chat_id = get_peer_id(event.peer_id)
+        chat_id = str(get_peer_id(event.peer_id))
 
         if chat_id not in source_dialogs.keys():
             return
 
         print(message.message)
 
-        if message.media:
-            print(message.media)
+        # if message.media:
+            # print(message.media)
         if message.reply_to:
-            await handle_reply_message(message, destination_dialogs[sources[str(chat_id)]])
+            await handle_reply_message(message, destination_dialogs[sources[chat_id]])
         else:
-            await handle_message(message, destination_dialogs[sources[str(chat_id)]])
+            await handle_message(message, destination_dialogs[sources[chat_id]])
     except Exception as e:
         print(e)
 
@@ -109,7 +109,7 @@ async def new_message_handler(event):
 async def message_edited_handler(event):
     try:
         message = event.message
-        chat_id = get_peer_id(event.peer_id)
+        chat_id = str(get_peer_id(event.peer_id))
 
         if chat_id not in source_dialogs.keys():
             return
@@ -118,7 +118,7 @@ async def message_edited_handler(event):
         id = retrieved_ids[0][1] if retrieved_ids else None
         if id:
             print(message.message)
-            await client.edit_message(destination_dialogs[sources[str(chat_id)]], id, message.message, file=message.media)
+            await client.edit_message(destination_dialogs[sources[chat_id]], id, message.message, file=message.media)
     except Exception as e:
         print(e)
 
@@ -161,7 +161,6 @@ async def purge_database():
 ######################
 #     Execution      #
 ######################
-
 
 create_table(conn)
 client.start()
